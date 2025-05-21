@@ -3,7 +3,7 @@ import requests
 def create_odoo_lead(name, email, phone, description):
     # Replace these with your Odoo credentials and URL
     ODOO_URL = "https://your-odoo-instance.com"
-    API_KEY = "your-api-key"
+    API_KEY = "61d7e0fda8e22c874ea94a95829a78103acbbacb"
     DB_NAME = "your-db"
     headers = {
         "Authorization": f"Bearer {API_KEY}",
