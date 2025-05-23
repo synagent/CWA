@@ -4,8 +4,18 @@ from odoo_client import create_odoo_lead
 from pdf_generator import generate_pdf_report
 import uuid
 import os
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://addpropertyvalue.com"],  # ✅ Your Vercel domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.post("/intake")
 async def handle_intake(
