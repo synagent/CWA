@@ -29,13 +29,17 @@ async def handle_intake(
             f.write(await photo.read())
         photo_paths.append(path)
 
-    report_path = generate_pdf_report(name, damage_description, photo_paths)
+  report_path = f"intake/{intake_id}/report.pdf"
+generate_pdf_report(name, damage_description, photo_paths, output_path=report_path)
 
-    create_odoo_lead(name, email, phone, damage_description)
+report_url = f"/report/{intake_id}"
+print("✅ Intake ID:", intake_id)
+print("📄 Report path:", report_path)
+print("✅ Generated report URL:", report_url)
 
-    return {
+return {
     "status": "ok",
-    "report_url": "/report/sample-report.pdf"
+    "report_url": report_url
 }
 
 
