@@ -33,7 +33,11 @@ async def handle_intake(
 
     create_odoo_lead(name, email, phone, damage_description)
 
-    return {"status": "ok", "report_url": f"/report/{intake_id}"}
+    return {
+    "status": "ok",
+    "report_url": "/report/sample-report.pdf"
+}
+
 
 @app.get("/report/{intake_id}")
 def get_report(intake_id: str):
