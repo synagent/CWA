@@ -1,7 +1,7 @@
 from fpdf import FPDF
 import os
 
-def generate_pdf_report(name, description, photo_paths):
+def generate_pdf_report(name, description, photo_paths, output_path):
     class PDF(FPDF):
         def header(self):
             self.set_font("Arial", "B", 14)
@@ -14,9 +14,15 @@ def generate_pdf_report(name, description, photo_paths):
     pdf.multi_cell(0, 10, f"Homeowner: {name}\n\nDamage Summary:\n{description}\n")
 
     for path in photo_paths:
-        pdf.add_page()
-        pdf.image(path, x=10, y=30, w=180)
+        if os.path.exists(path):
+            try:
+                pdf.add_page()
+                pdf.image(path, x=10, y=30, w=180)
+            except Exception as e:
+                print(f"⚠️ Failed to add image {path}: {e}")
+        else:
+            print(f"⚠️ Image file not found: {path}")
 
-    report_path = os.path.join(os.path.dirname(photo_paths[0]), "report.pdf")
-    pdf.output(report_path)
-    return report_path
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    pdf.output(output_path)
+    return output_path
